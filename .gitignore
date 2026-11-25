@@ -9,6 +9,9 @@ dist/
 *.crx
 *.pem
 
+# Arquivos gerados pelo Chrome ao carregar extensao
+_metadata/
+
 # Logs e temporários
 *.log
 node_modules/
