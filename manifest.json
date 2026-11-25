@@ -1,0 +1,70 @@
+{
+  "manifest_version": 3,
+  "name": "TwitchShield — Bloqueador de Ads para Twitch",
+  "short_name": "TwitchShield",
+  "version": "1.1.0",
+  "description": "Bloqueia anúncios de vídeo (pre-roll e mid-roll), banners e rastreadores em lives da Twitch com troca inteligente de stream HLS.",
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "action": {
+    "default_title": "TwitchShield — Bloqueador de Ads para Twitch",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://*.twitch.tv/*",
+    "*://*.ttvnw.net/*",
+    "*://*.jtvnw.net/*"
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "twitch_ad_rules",
+        "enabled": true,
+        "path": "rules/ad_rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "js": [
+        "src/content/injector.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "js": [
+        "src/content/bridge.js"
+      ],
+      "css": [
+        "src/content/cosmetic.css"
+      ],
+      "run_at": "document_start",
+      "world": "ISOLATED",
+      "all_frames": false
+    }
+  ]
+}

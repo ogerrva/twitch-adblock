@@ -1,0 +1,14 @@
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Pacotes de release gerados localmente
+dist/
+*.zip
+*.crx
+*.pem
+
+# Logs e temporários
+*.log
+node_modules/

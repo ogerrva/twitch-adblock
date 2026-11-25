@@ -1,0 +1,25 @@
+/* ==========================================================================
+   TwitchShield — Filtros Cosméticos (somente banners/anúncios externos)
+   Nenhum card, selo ou overlay é exibido sobre o vídeo da live.
+   ========================================================================== */
+
+html.twitchshield-enabled.twitchshield-hide-banners [data-a-target="stream-display-ad"],
+html.twitchshield-enabled.twitchshield-hide-banners [data-test-selector="ad-banner-default-text"],
+html.twitchshield-enabled.twitchshield-hide-banners [data-a-target="video-ad-banner"],
+html.twitchshield-enabled.twitchshield-hide-banners .stream-display-ad__wrapper,
+html.twitchshield-enabled.twitchshield-hide-banners .video-ad-banner,
+html.twitchshield-enabled.twitchshield-hide-banners .ad-banner,
+html.twitchshield-enabled.twitchshield-hide-banners .channel-leaderboard-ad,
+html.twitchshield-enabled.twitchshield-hide-banners [class*="stream-display-ad"],
+html.twitchshield-enabled.twitchshield-hide-banners [class*="DisplayAd"],
+html.twitchshield-enabled.twitchshield-hide-banners [aria-label="Advertisement"],
+html.twitchshield-enabled.twitchshield-hide-banners [aria-label="Anúncio"],
+html.twitchshield-enabled.twitchshield-hide-banners .side-nav-card__ad,
+html.twitchshield-enabled.twitchshield-hide-banners .carousel-ad-slot {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" width="1200" height="380" role="img" aria-label="TwitchShield - Bloqueador de Ads para Lives da Twitch">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0a12"/>
+      <stop offset="50%" stop-color="#17102a"/>
+      <stop offset="100%" stop-color="#0e0e14"/>
+    </linearGradient>
+    <radialGradient id="glowPurple" cx="24%" cy="50%" r="48%">
+      <stop offset="0%" stop-color="#9147ff" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#9147ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowGreen" cx="85%" cy="22%" r="42%">
+      <stop offset="0%" stop-color="#00f593" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#00f593" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a970ff"/>
+      <stop offset="100%" stop-color="#6425d8"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="65%" stop-color="#e4d4ff"/>
+      <stop offset="100%" stop-color="#00f593"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="380" rx="22" fill="url(#bg)"/>
+  <rect width="1200" height="380" rx="22" fill="url(#glowPurple)"/>
+  <rect width="1200" height="380" rx="22" fill="url(#glowGreen)"/>
+
+  <!-- Subtle Grid -->
+  <g stroke="#ffffff" stroke-opacity="0.035" stroke-width="1">
+    <path d="M0 95 H1200 M0 190 H1200 M0 285 H1200"/>
+    <path d="M150 0 V380 M300 0 V380 M450 0 V380 M600 0 V380 M750 0 V380 M900 0 V380 M1050 0 V380"/>
+  </g>
+
+  <!-- Outer Border -->
+  <rect x="1.5" y="1.5" width="1197" height="377" rx="21" fill="none" stroke="#9147ff" stroke-opacity="0.45" stroke-width="2"/>
+
+  <!-- Left Shield Emblem -->
+  <g transform="translate(88, 72)">
+    <rect x="0" y="0" width="216" height="216" rx="46" fill="url(#shieldGrad)" fill-opacity="0.22" stroke="#9147ff" stroke-opacity="0.65" stroke-width="2.5"/>
+    <path d="M108 34 L172 60 V116 C172 154 144 182 108 194 C72 182 44 154 44 116 V60 Z" fill="url(#shieldGrad)" stroke="#ffffff" stroke-opacity="0.9" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M77 115 L99 137 L141 91" fill="none" stroke="#00f593" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Right Copy -->
+  <g transform="translate(348, 86)" font-family="'Segoe UI', Inter, -apple-system, BlinkMacSystemFont, Roboto, sans-serif">
+    <!-- Top Pill -->
+    <rect x="0" y="0" width="322" height="32" rx="16" fill="#00f593" fill-opacity="0.14" stroke="#00f593" stroke-opacity="0.45"/>
+    <circle cx="20" cy="16" r="5" fill="#00f593"/>
+    <text x="34" y="21" fill="#00f593" font-size="13.5" font-weight="700" letter-spacing="0.4">EXTENSÃO MANIFEST V3 · 100% GRATUITA</text>
+
+    <!-- Title -->
+    <text x="0" y="102" fill="url(#textGrad)" font-size="66" font-weight="900" letter-spacing="-1.5">TwitchShield</text>
+
+    <!-- Subtitle -->
+    <text x="2" y="142" fill="#d8d6e4" font-size="22" font-weight="500">Bloqueador de Ads para Lives da Twitch — Sem Anúncios e Sem Cards na Tela</text>
+
+    <!-- Feature Chips -->
+    <g transform="translate(0, 174)" font-size="14" font-weight="700">
+      <rect x="0" y="0" width="186" height="38" rx="10" fill="#1d1a2c" stroke="#9147ff" stroke-opacity="0.55"/>
+      <text x="93" y="24" text-anchor="middle" fill="#efeff1">Stream Swap HLS</text>
+
+      <rect x="200" y="0" width="188" height="38" rx="10" fill="#1d1a2c" stroke="#9147ff" stroke-opacity="0.55"/>
+      <text x="294" y="24" text-anchor="middle" fill="#efeff1">Zero Cards na Live</text>
+
+      <rect x="402" y="0" width="212" height="38" rx="10" fill="#1d1a2c" stroke="#9147ff" stroke-opacity="0.55"/>
+      <text x="508" y="24" text-anchor="middle" fill="#efeff1">Chrome · Edge · Brave</text>
+
+      <rect x="628" y="0" width="142" height="38" rx="10" fill="#1d1a2c" stroke="#00f593" stroke-opacity="0.5"/>
+      <text x="699" y="24" text-anchor="middle" fill="#00f593">Open Source</text>
+    </g>
+  </g>
+</svg>

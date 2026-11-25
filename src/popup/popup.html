@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TwitchShield</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Cabeçalho -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+            <path d="M12 2L4 5.5V11.5C4 16.7 7.4 21.4 12 22.8C16.6 21.4 20 16.7 20 11.5V5.5L12 2Z" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M9 12.2L11.2 14.4L15.6 9.8" stroke="#00f593" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">TwitchShield</h1>
+          <span class="brand-sub">Bloqueador de Ads · Live HLS</span>
+        </div>
+      </div>
+
+      <label class="power-switch" title="Ativar ou pausar proteção">
+        <input type="checkbox" id="toggle-enabled" />
+        <span class="slider"></span>
+      </label>
+    </header>
+
+    <!-- Navegação de abas -->
+    <nav class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="overview" role="tab">Proteção</button>
+      <button class="tab-btn" data-tab="whitelist" role="tab">Lista Branca</button>
+      <button class="tab-btn" data-tab="logs" role="tab">Logs</button>
+    </nav>
+
+    <!-- Aba 1: Proteção -->
+    <main class="tab-panel active" id="panel-overview">
+      <!-- Card do canal atual -->
+      <section class="channel-card" id="channel-card">
+        <div class="channel-info">
+          <div class="status-pill" id="status-pill">
+            <span class="status-dot"></span>
+            <span id="status-text">Verificando...</span>
+          </div>
+          <div class="channel-name" id="channel-name">Nenhuma live aberta</div>
+        </div>
+        <button class="btn-whitelist" id="btn-channel-whitelist" hidden>
+          Permitir ads aqui
+        </button>
+      </section>
+
+      <!-- Estatísticas -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Nesta live</span>
+          <strong class="stat-value" id="stat-session">0</strong>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">Total bloqueado</span>
+            <button class="btn-icon" id="btn-reset-stats" title="Zerar contador">↺</button>
+          </div>
+          <strong class="stat-value accent" id="stat-total">0</strong>
+        </div>
+      </section>
+
+      <!-- Modo de bloqueio -->
+      <section class="section">
+        <div class="section-title">Modo de bloqueio</div>
+        <div class="mode-selector">
+          <button class="mode-option" data-mode="auto" id="mode-auto">
+            <span class="mode-name">Automático (Stream Swap + Strip)</span>
+            <span class="mode-desc">Troca a playlist HLS por um stream limpo em paralelo e remove segmentos de ad.</span>
+          </button>
+          <button class="mode-option" data-mode="mute" id="mode-mute">
+            <span class="mode-name">Apenas Silenciar Áudio</span>
+            <span class="mode-desc">Mantém o player nativo sem trocar stream e silencia apenas o som durante ads.</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Ajustes rápidos -->
+      <section class="section toggles-list">
+        <label class="toggle-row">
+          <div>
+            <div class="toggle-title">Ocultar banners e anúncios laterais</div>
+            <div class="toggle-desc">Remove banners de display sem colocar nada sobre o vídeo</div>
+          </div>
+          <input type="checkbox" class="mini-check" id="opt-hide-banners" />
+        </label>
+
+        <label class="toggle-row">
+          <div>
+            <div class="toggle-title">Silenciar áudio se todos os backups falharem</div>
+            <div class="toggle-desc">Apenas muta o som temporariamente (sem card sobre a live)</div>
+          </div>
+          <input type="checkbox" class="mini-check" id="opt-fallback-mute" />
+        </label>
+      </section>
+    </main>
+
+    <!-- Aba 2: Lista Branca -->
+    <section class="tab-panel" id="panel-whitelist">
+      <p class="helper-text">
+        Adicione canais favoritos onde você deseja permitir anúncios para apoiar o streamer.
+      </p>
+      <form class="whitelist-form" id="whitelist-form">
+        <input
+          type="text"
+          id="whitelist-input"
+          placeholder="Ex: gaules, alanzoka..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button type="submit" class="btn-primary">Adicionar</button>
+      </form>
+      <ul class="whitelist-list" id="whitelist-list"></ul>
+      <div class="empty-state" id="whitelist-empty" hidden>
+        Nenhum canal na lista branca ainda.
+      </div>
+    </section>
+
+    <!-- Aba 3: Logs -->
+    <section class="tab-panel" id="panel-logs">
+      <div class="logs-header">
+        <span class="helper-text">Atividade recente do motor HLS</span>
+        <button class="btn-ghost" id="btn-clear-logs">Limpar</button>
+      </div>
+      <div class="logs-list" id="logs-list"></div>
+      <div class="empty-state" id="logs-empty" hidden>
+        Nenhum evento registrado ainda. Abra uma live na Twitch.
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>v1.1.0 · 100% local (sem telemetria)</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TwitchShield — Bloqueador de Ads para Lives da Twitch (Chrome, Edge, Brave, Opera)</title>
+  <meta name="description" content="Baixe grátis o TwitchShield: extensão Manifest V3 para bloquear anúncios pre-roll, mid-roll e banners em lives da Twitch no Chrome, Edge, Brave e Opera GX. Sem tela preta e sem cards sobre a live." />
+  <meta name="keywords" content="bloqueador de ads twitch, twitch adblock, tirar anuncios twitch, extensao bloquear anuncios live twitch, twitch adblocker chrome, twitch adblock edge brave opera, bloqueador de anuncios twitch 2026, manifest v3 twitch adblock" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ogerrva.github.io/twitch-adblock/" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="TwitchShield — Bloqueador de Ads para Lives da Twitch" />
+  <meta property="og:description" content="Assista lives na Twitch sem anúncios embutidos e sem cards na tela. Extensão grátis, open source e pronta para Chrome, Edge, Brave e Opera." />
+  <meta property="og:url" content="https://ogerrva.github.io/twitch-adblock/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/ogerrva/twitch-adblock/main/assets/banner.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TwitchShield — Bloqueador de Ads para Lives da Twitch" />
+  <meta name="twitter:description" content="Pule anúncios embutidos na Twitch com Stream Swap HLS paralelo. Gratuito e Open Source." />
+
+  <!-- Structured Data (Google Rich Results: SoftwareApplication + FAQPage) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "TwitchShield — Bloqueador de Ads para Lives da Twitch",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Windows, macOS, Linux",
+    "softwareVersion": "1.1.0",
+    "url": "https://ogerrva.github.io/twitch-adblock/",
+    "downloadUrl": "https://github.com/ogerrva/twitch-adblock/releases/latest",
+    "license": "https://opensource.org/licenses/MIT",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    },
+    "description": "Extensão Manifest V3 open source para bloquear anúncios pre-roll, mid-roll e banners em lives da Twitch no Chrome, Edge, Brave e Opera."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Como bloquear anúncios em lives da Twitch no Chrome, Edge, Brave ou Opera?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Baixe o arquivo TwitchShield-v1.1.0.zip na página de Releases, extraia a pasta, abra chrome://extensions, ative o Modo do desenvolvedor e clique em Carregar sem compactação selecionando a pasta extraída."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "O TwitchShield exibe tela preta ou cards sobre a live?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Não. O TwitchShield realiza troca paralela de stream HLS (Stream Swap) e remoção de segmentos de anúncio, sem exibir nenhum card, blur ou selo por cima do vídeo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "A extensão TwitchShield é gratuita e segura?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sim. É 100% gratuita, código aberto sob licença MIT, funciona totalmente no seu navegador sem servidores externos e sem coleta de dados."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0a0910;
+      --surface: #14131d;
+      --surface-2: #1c1a29;
+      --border: #2b283d;
+      --text: #f2f1f7;
+      --muted: #a6a3b8;
+      --purple: #9147ff;
+      --purple-light: #b380ff;
+      --green: #00f593;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background:
+        radial-gradient(900px 420px at 20% 0%, rgba(145, 71, 255, 0.24), transparent 60%),
+        radial-gradient(700px 380px at 85% 10%, rgba(0, 245, 147, 0.12), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 22px;
+    }
+    header {
+      padding: 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 20px;
+      font-weight: 800;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #9147ff, #5c24c9);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 20px rgba(145, 71, 255, 0.45);
+    }
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .hero {
+      text-align: center;
+      padding: 72px 0 56px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(0, 245, 147, 0.12);
+      border: 1px solid rgba(0, 245, 147, 0.38);
+      color: var(--green);
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 56px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, #ffffff 10%, #c6a0ff 60%, #00f593 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      max-width: 680px;
+      margin: 0 auto 34px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 28px;
+      border-radius: 12px;
+      font-size: 15.5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, #9147ff, #772ce8);
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(145, 71, 255, 0.42);
+    }
+    .btn-secondary {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .browsers {
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    section { padding: 48px 0; }
+    h2 {
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 34px;
+      font-size: 15px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .card-icon {
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+    .card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .step-num {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: rgba(145, 71, 255, 0.22);
+      color: var(--purple-light);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    code {
+      background: #232036;
+      color: #d6bcff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    .faq {
+      max-width: 780px;
+      margin: 0 auto;
+      display: grid;
+      gap: 14px;
+    }
+    details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    details p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 32px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+    footer a { color: var(--purple-light); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="brand" href="#">
+        <span class="brand-icon" aria-hidden="true">🛡️</span>
+        <span>TwitchShield</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#recursos">Recursos</a>
+        <a href="#instalar">Como Instalar</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/ogerrva/twitch-adblock">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="pill">● Manifest V3 · v1.1.0 · 100% Gratuito e Open Source</div>
+        <h1>Assista Lives na Twitch <span>Sem Nenhum Anúncio</span></h1>
+        <p>
+          O <strong>TwitchShield</strong> intercepta o player HLS da Twitch em tempo real, troca anúncios embutidos por streams ao vivo limpos em paralelo e remove banners — <strong>sem exibir nenhum card ou tela preta sobre a live</strong>.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/ogerrva/twitch-adblock/releases/latest">
+            ⬇️ Baixar Extensão Pronta (ZIP)
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/ogerrva/twitch-adblock">
+            ⭐ Ver Código no GitHub
+          </a>
+        </div>
+        <div class="browsers">
+          Compatível com Google Chrome · Microsoft Edge · Brave · Opera · Opera GX · Vivaldi
+        </div>
+      </section>
+
+      <section id="recursos">
+        <h2>Feito especificamente para os anúncios da Twitch</h2>
+        <p class="section-sub">Bloqueio em 3 camadas pensado para vencer a inserção de anúncios no servidor (SSAI).</p>
+        <div class="grid">
+          <article class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Stream Swap HLS Paralelo</h3>
+            <p>Dispara 8 perfis anônimos simultaneamente para substituir playlists com anúncios por um stream limpo em milissegundos, voltando à qualidade máxima logo após o intervalo.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">🎬</div>
+            <h3>Zero Cards Sobre o Vídeo</h3>
+            <p>Nada de avisos, telas escurecidas ou banners flutuantes atrapalhando a transmissão. Sua live fica 100% limpa do início ao fim.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">✂️</div>
+            <h3>Remoção de Segmentos de Ad</h3>
+            <p>Identifica e remove tags <code>stitched-ad</code> e segmentos de anúncio diretamente na playlist <code>.m3u8</code> antes do player reproduzi-los.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">💜</div>
+            <h3>Lista Branca em 1 Clique</h3>
+            <p>Quer apoiar seu streamer favorito? Libere anúncios em canais específicos com apenas um clique pelo popup da extensão.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">🔒</div>
+            <h3>100% Local e Privado</h3>
+            <p>Zero telemetria, zero servidores externos de proxy e código-fonte totalmente aberto sob licença MIT para auditoria.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">📊</div>
+            <h3>Estatísticas e Logs ao Vivo</h3>
+            <p>Acompanhe quantos anúncios foram bloqueados na live atual, total acumulado e o log em tempo real do motor HLS.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="instalar">
+        <h2>Instalação em 30 segundos</h2>
+        <p class="section-sub">Não precisa de conhecimentos técnicos — basta carregar a pasta no navegador.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h3>Baixe o pacote ZIP</h3>
+            <p>Faça download do arquivo <code>TwitchShield-v1.1.0.zip</code> na página de <a href="https://github.com/ogerrva/twitch-adblock/releases/latest" style="color:#b380ff">Releases</a> e extraia em uma pasta.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h3>Abra as Extensões</h3>
+            <p>Acesse <code>chrome://extensions</code> (ou <code>edge://extensions</code> / <code>brave://extensions</code>).</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h3>Modo Desenvolvedor</h3>
+            <p>Ative a chave <strong>Modo do desenvolvedor</strong> no canto superior direito da tela.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <h3>Carregar Pasta</h3>
+            <p>Clique em <strong>Carregar sem compactação</strong>, selecione a pasta extraída e recarregue a Twitch!</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <h2>Perguntas Frequentes</h2>
+        <p class="section-sub">Tudo o que você precisa saber antes de instalar.</p>
+        <div class="faq">
+          <details open>
+            <summary>Funciona para anúncios pre-roll e mid-roll na Twitch?</summary>
+            <p>Sim! O motor HLS v2 é injetado diretamente no Blob do Worker do player Amazon IVS no carregamento da página, interceptando tanto anúncios iniciais (pre-roll) quanto comerciais no meio da live (mid-roll).</p>
+          </details>
+          <details>
+            <summary>Preciso desativar outros bloqueadores de anúncios na Twitch?</summary>
+            <p>Se você usa outro bloqueador específico para Twitch, recomendamos manter apenas um ativo na Twitch para evitar conflitos na interceptação do Web Worker do player.</p>
+          </details>
+          <details>
+            <summary>É seguro usar com minha conta logada da Twitch?</summary>
+            <p>Sim. A extensão roda 100% localmente, não lê sua senha, não altera sua conta e usa requisições anônimas (sem cookies) ao buscar streams limpos.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        <strong>TwitchShield</strong> · Open Source sob licença MIT ·
+        <a href="https://github.com/ogerrva/twitch-adblock">github.com/ogerrva/twitch-adblock</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
